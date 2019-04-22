@@ -3,6 +3,8 @@ package ru.softwerke.practice.app2019.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import ru.softwerke.practice.app2019.model.Model;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Device {
+public class Device implements Model{
     public static final String ID_FIELD = "id";
     public static final String PRICE_FIELD = "price";
     public static final String MODEL_FIELD = "model";
@@ -33,8 +35,8 @@ public class Device {
     private final Color color;
 
     @JsonProperty(DATE_FIELD)
-    @XmlJavaTypeAdapter(DateManager.class)
-    private final LocalDateTime date;
+    //@XmlJavaTypeAdapter(DateManager.class)
+    private final String date;
 
     @JsonProperty(MANUFACTURER_FIELD)
     private final String manufacturer;
@@ -44,7 +46,7 @@ public class Device {
             @NotNull @JsonProperty(PRICE_FIELD) BigDecimal price,
             @NotNull @JsonProperty(MODEL_FIELD) String model,
             @NotNull @JsonProperty(COLOR_FIELD) Color color,
-            @NotNull @JsonProperty(DATE_FIELD) LocalDateTime date,
+            @NotNull @JsonProperty(DATE_FIELD) String date,
             @NotNull @JsonProperty(MANUFACTURER_FIELD) String manufacturer) {
         this.price = price;
         this.model = model;
@@ -73,7 +75,7 @@ public class Device {
         return color;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 

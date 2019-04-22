@@ -3,9 +3,8 @@ package ru.softwerke.practice.app2019.controller.rest;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import ru.softwerke.practice.app2019.model.Color;
 import ru.softwerke.practice.app2019.model.Customer;
-import ru.softwerke.practice.app2019.service.DataService;
-import ru.softwerke.practice.app2019.service.CustomerDataService;
-import ru.softwerke.practice.app2019.memory.DeviceFilter;
+import ru.softwerke.practice.app2019.service.Service;
+
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -20,10 +19,10 @@ import java.util.UUID;
 
 @Path("customer")
 public class CustomerRestController {
-    private DataService<Customer> customerDataService;
+    private Service<Customer> customerDataService;
 
     @Inject
-    public CustomerRestController(DataService<Customer> customerDataService){
+    public CustomerRestController(Service<Customer> customerDataService){
         this.customerDataService = customerDataService;
     }
 
@@ -38,8 +37,7 @@ public class CustomerRestController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Customer createCustomer(Customer customer) {
-        UUID customerId = customerDataService.put(customer);
-        customer.setId(customerId);
+        customerDataService.put(customer);
         return customer;
     }
 

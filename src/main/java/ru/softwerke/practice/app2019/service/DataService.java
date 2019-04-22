@@ -1,19 +1,31 @@
 package ru.softwerke.practice.app2019.service;
 
-import ru.softwerke.practice.app2019.model.Device;
-import ru.softwerke.practice.app2019.memory.DeviceFilter;
 
+import ru.softwerke.practice.app2019.memory.Memory;
+import ru.softwerke.practice.app2019.filter.Filter;
+import ru.softwerke.practice.app2019.model.Model;
 import java.util.List;
 import java.util.UUID;
 
-public interface DataService<T> {
-    UUID put(T item);
+public class DataService<T extends Model> implements Service<T> {
+    private Memory<T> memory;
 
-    T getItemById(UUID id);
+    public DataService(Memory<T> memory){
+        this.memory = memory;
+    }
 
-    List<T> getAll(DeviceFilter filter);
+    @Override
+    public UUID put(T model) {
+        return memory.save(model);
+    }
 
-    default List<T> getAll(){
-        return getAll(DeviceFilter.EMPTY);
+    @Override
+    public T getItemById(UUID id) {
+        return memory.get(id);
+    }
+
+    @Override
+    public List<T> getAll(Filter filter) {
+        return memory.getAll(filter);
     }
 }
